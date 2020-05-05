@@ -5,13 +5,30 @@ This is going to be an example of Docker using multiple containers. The idea is 
 
 Architecture
 ------------
-* The app is going to be a React Application.
-* When user submits a value it will make a request to a Express Server serving as an API.
+* The app is going to be a React Application using Express
 * The 'Values I have seen' section is gonna be stored in Postgres.
 * The 'Calculated values' is going to be stored in Redis (volatile DB).
 * There will be a separate NodeJS process called Worker that watches Redis for new indexes to show up. 
 
-Steps
------
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture.png)
 
-1. Add package.json, create the index.js and also the keys.json
+Here's another view of the app's architecture:
+
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture.png)
+
+1 Creating the worker process (watches Redis for new indexes)
+-------------------------------------------------------------
+
+1. Add package.json, create the index.js and also the keys.json. More info commented in the files. 
+
+
+2 Creating the Express server (serves as API layer)
+-------------------------------------------------------------
+
+1. Creates a folder 'server' which will have all the code for the Express server. The code in that folder is commented for better understanding.
+
+3 Creating the react app
+------------------------
+
+1.  As of npm@5.2.0 we can now avoid this global install and instead use npx to generate the app on the fly to get the most current libraries and avoid many dependency conflicts. This is now the recommended way to generate an app with Create React App. So **instead of "npm install -g create-react-app' and 'create-react-app client' use npx create-react-app client** Documentation: https://create-react-app.dev/docs/getting-started#quick-start
+
