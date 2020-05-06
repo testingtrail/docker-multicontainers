@@ -32,3 +32,11 @@ Here's another view of the app's architecture:
 
 1.  As of npm@5.2.0 we can now avoid this global install and instead use npx to generate the app on the fly to get the most current libraries and avoid many dependency conflicts. This is now the recommended way to generate an app with Create React App. So **instead of "npm install -g create-react-app' and 'create-react-app client' use npx create-react-app client** Documentation: https://create-react-app.dev/docs/getting-started#quick-start
 
+2. Remember to run it in the root of the project, not inside 'server' or 'worker'. It will create a react app under 'client' directory
+
+3. We are going to create a dummy page ('OtherPage.js') just to have routing and more robust front end example. Then we will create 'Fib.js'
+
+4. Add Fib.js and OtherPage.js to App.js component
+    - add react router dom and axios to the package.json
+    - modify app.js by adding router imports, otherpage and Fib
+    - 
