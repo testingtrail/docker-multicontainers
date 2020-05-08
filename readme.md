@@ -39,4 +39,11 @@ Here's another view of the app's architecture:
 4. Add Fib.js and OtherPage.js to App.js component
     - add react router dom and axios to the package.json
     - modify app.js by adding router imports, otherpage and Fib
-    - 
+
+4 Create DEV version of the client container
+------------------------------
+
+1. Create a 'Dockerfile.dev' It will be same as previous projects, copy package.json first, then evrything else and start react app with npm run start.
+
+2. Run 'docker build -f Dockerfile.dev .' **inside client folder**
+
