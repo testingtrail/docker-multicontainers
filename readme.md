@@ -47,3 +47,5 @@ Here's another view of the app's architecture:
 
 2. Run 'docker build -f Dockerfile.dev .' **inside client folder**
 
+3. Run 'docker run <containeridfrompreviousstep> to check it is working as expected
+
