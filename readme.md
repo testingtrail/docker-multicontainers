@@ -14,7 +14,7 @@ Architecture
 
 Here's another view of the app's architecture:
 
-![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture.png)
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture2.png)
 
 1 Creating the worker process (watches Redis for new indexes)
 -------------------------------------------------------------
