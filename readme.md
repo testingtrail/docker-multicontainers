@@ -76,7 +76,7 @@ Here's another view of the app's architecture:
 
 2. Here's how it will work
 
-![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture.png)
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture3.png)
 
 3. create a file in root called docker-compose.yml
     - for postgres use the docker hub image with the latest tag
