@@ -49,3 +49,45 @@ Here's another view of the app's architecture:
 
 3. Run 'docker run <containeridfrompreviousstep> to check it is working as expected
 
+
+5 Create DEV version of the server container
+------------------------------
+
+1. Create a 'Dockerfile.dev' It will be same as for the client folder, copy package.json first, then evrything else and the only thing changin is adding nodemon as starting command. Nodemon looks for changes in the project and refresh it automatically if it finds something changes
+
+2. Run 'docker build -f Dockerfile.dev .' **inside client folder**
+
+3. Run 'docker run <containeridfrompreviousstep> to check it is working as expected
+
+6 Create DEV version of the worker container
+------------------------------
+
+1. Create a 'Dockerfile.dev' It will be same as for the client and server folder, copy package.json first, then evrything else and the only thing changin is adding nodemon as starting command. Nodemon looks for changes in the project and refresh it automatically if it finds something changes
+
+2. Run 'docker build -f Dockerfile.dev .' **inside client folder**
+
+3. Run 'docker run <containeridfrompreviousstep> to check it is working as expected
+
+
+7 Putthing together the docker compose file
+-----------------------------------------
+
+1. Stop all the created running containers
+
+2. Here's how it will work
+
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture.png)
+
+3. create a file in root called docker-compose.yml
+    - for postgres use the docker hub image with the latest tag
+    - POSTGRES_PASSWORD=postgres_password (is mandatory now for postgres container)
+    - Add redis service.
+    - Add the service for the server which is our server folder, the context will be the path of the server folder
+    - put a hole in /app/node_modules so the docker compose does not change nothin in there
+    - add ./server:/app so each time there is a change in the server folder it will automatically be reflected in the app folder 
+
+4. There is a keys.js where there is bunch of environment variables, those are the ones we have to send from the docker compose file
+    - If you don't put a value to the variables then it will take the value of that variable from your computer
+    - REDIS_HOST: put redis and it will understand it is the service with the same name in the file
+    - REDIS_PORT: take a look to docker hub documentation for redis and you will see the port
+    - for the postgres variables you do the same, go to docker hub documentation
