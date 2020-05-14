@@ -91,3 +91,37 @@ Here's another view of the app's architecture:
     - REDIS_HOST: put redis and it will understand it is the service with the same name in the file
     - REDIS_PORT: take a look to docker hub documentation for redis and you will see the port
     - for the postgres variables you do the same, go to docker hub documentation
+
+5. Add the services for worker and client, pretty much the same as the server container
+
+
+8 Why having Nginx
+------------------
+
+As of now we have pages for the react server and we have API requests that go to the Express server and right now we don't have anything that route both servers, so Nginx wil take those requests and route them properly
+
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture4.png)
+
+1. Create 'default.conf' to configure Nginx to work with the upstream servers (React and Express), upstream servers are servers behind Nginx
+    - The line 'rewrite /api/(.*) /$1 break;' means: apply a regex that fullfill that and remove the /api, because in the server we have without /api, like 'app.get('/values/current', async...'
+
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture5.png)
+
+2. We will creater the Dockerfile for nginx
+    - Copy the conf file and overwrite the default in the container
+
+3. Add the nginx to docker compose file
+    - This is the only one with ports mapping as nginx will route all the other ports internally in the default.conf
+
+9 Running the app
+-----------------
+
+1. It is likely the app will throw some errors when doing docker-compose up --build, so then enter docker-compose down and run it again
+
+2. If you open the chrome dev tools in console tab, you will see an error of the web socket basically because nginx wants an active connection to the react server, so what you can do is add what is inside here 'location /sockjs-node {...}' in default.conf for nginx
+
+3. Check the console in dev tools for more issues for example this one: 
+    - 504 bad gateway connection postgress: Uodate the pg dependency inside package.json file in server folder
+
+
+

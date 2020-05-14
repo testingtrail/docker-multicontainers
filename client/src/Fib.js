@@ -26,12 +26,13 @@ class Fib extends Component {
 
   // method for indexes that has been indexed
     // the '/api/values/all' is part of the express server as a handler for postgres
-  async fetchIndexes() {
-    const seenIndexes = await axios.get('/api/values/all');
-    this.setState({
-      seenIndexes: seenIndexes.data
-    });
-  }
+
+    async fetchIndexes() {
+      const seenIndexes = await axios.get('/api/values/all');
+      this.setState({
+        seenIndexes: seenIndexes.data
+      });
+    }
 
   // method to handle each time the form is submitted
     // assigning an anonymous function to handleSubmit to make it a function
