@@ -9,7 +9,7 @@ before_install:
 script:
     - docker run -e CI=true testingtrail/react npm test
 
-after_sucess:
+after_success:
     - docker build -t testingtrail/multi-client ./client
     - docker build -t testingtrail/multi-nginx ./nginx
     - docker build -t testingtrail/multi-server ./server
