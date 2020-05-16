@@ -161,6 +161,7 @@ We are going to now to deploy to production, we are going to use Travis as our C
 
 3. **Configure the travis.yml file**
     - Create a .travis.yml
+    - Your username from builded image tag have to be the same as your doker login. Example docker build -t {DOCKER_ID}/multi-client ./client
     - We are going to use de dev version of the Dockerfile as the prod version is just the build and do not allow to perform tests
     - After success we will create imagers using the production dockerfile
 

@@ -10,17 +10,17 @@ script:
     - docker run -e CI=true testingtrail/react npm test
 
 after_success:
-    - docker build -t testingtrail/multi-client ./client
-    - docker build -t testingtrail/multi-nginx ./nginx
-    - docker build -t testingtrail/multi-server ./server
-    - docker build -t testingtrail/multi-worker ./worker
+    - docker build -t qaguy/multi-client ./client
+    - docker build -t qaguy/multi-nginx ./nginx
+    - docker build -t qaguy/multi-server ./server
+    - docker build -t qaguy/multi-worker ./worker
 
     # log in to docker cli
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin docker.io
 
     # take those images and push them to docker hub
-    - docker push testingtrail/multi-client
-    - docker push testingtrail/multi-nginx
-    - docker push testingtrail/multi-server
-    - docker push testingtrail/multi-worker
+    - docker push qaguy/multi-client
+    - docker push qaguy/multi-nginx
+    - docker push qaguy/multi-server
+    - docker push qaguy/multi-worker
 
