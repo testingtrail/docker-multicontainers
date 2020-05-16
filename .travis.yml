@@ -1,0 +1,26 @@
+language: generic 
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t testingtrail/react -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true testingtrail/react npm test
+
+after_sucess:
+    - docker build -t testingtrail/multi-client ./client
+    - docker build -t testingtrail/multi-nginx ./nginx
+    - docker build -t testingtrail/multi-server ./server
+    - docker build -t testingtrail/multi-worker ./worker
+
+    # log in to docker cli
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    # take those images and push them to docker hub
+    - docker push testingtrail/multi-client
+    - docker push testingtrail/multi-nginx
+    - docker push testingtrail/multi-server
+    - docker push testingtrail/multi-worker
+

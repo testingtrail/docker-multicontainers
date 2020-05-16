@@ -10,11 +10,11 @@ Architecture
 * The 'Calculated values' is going to be stored in Redis (volatile DB).
 * There will be a separate NodeJS process called Worker that watches Redis for new indexes to show up. 
 
-![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture.png)
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/images/architecture.png)
 
 Here's another view of the app's architecture:
 
-![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture2.png)
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/images/architecture2.png)
 
 1 Creating the worker process (watches Redis for new indexes)
 -------------------------------------------------------------
@@ -76,7 +76,7 @@ Here's another view of the app's architecture:
 
 2. Here's how it will work
 
-![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture3.png)
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/images/architecture3.png)
 
 3. create a file in root called docker-compose.yml
     - for postgres use the docker hub image with the latest tag
@@ -100,12 +100,12 @@ Here's another view of the app's architecture:
 
 As of now we have pages for the react server and we have API requests that go to the Express server and right now we don't have anything that route both servers, so Nginx wil take those requests and route them properly
 
-![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture4.png)
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/images/architecture4.png)
 
 1. Create 'default.conf' to configure Nginx to work with the upstream servers (React and Express), upstream servers are servers behind Nginx
     - The line 'rewrite /api/(.*) /$1 break;' means: apply a regex that fullfill that and remove the /api, because in the server we have without /api, like 'app.get('/values/current', async...'
 
-![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/architecture5.png)
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/images/architecture5.png)
 
 2. We will creater the Dockerfile for nginx
     - Copy the conf file and overwrite the default in the container
@@ -124,4 +124,50 @@ As of now we have pages for the react server and we have API requests that go to
     - 504 bad gateway connection postgress: Uodate the pg dependency inside package.json file in server folder
 
 
+10 On our way to deployment to production
+-----------------------------------------
 
+We are going to now to deploy to production, we are going to use Travis as our CD/CI and then upload the built prod to Dockerhub, and from there we can upload to any cloud service, in this case AWS Elastic Beanstalk
+
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/images/architecture6.png)
+
+
+1. Add production dockerfile for Worker
+
+2. Add production dockerfile for Server
+
+3. Add production dockerfile for Nginx
+
+4. Now we are going to have to Nginx server, the first which is the one we already have which routes to react or express servers. **The new nginx will be to host the react app in production environment**
+    - Create a folder Nginx inside the client folder and create a file default.conf that will point to port 3000 (react), check where the files are and tell which index file open as default.
+
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/images/architecture7.png)
+
+5. Add production dockerfile for Client
+    - we need to create the build folder from react
+    = we need to create the default.conf file from nginx
+    - we need to copy the build folder into the nginx html path
+
+
+11 Travis configuration and Dockerhub
+-------------------------------------
+
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/images/architecture8.png)
+
+1. Create a git repository (if you clone this one on yours you already did this step)
+
+2. Go to your Travis account (https://travis-ci.com/) if you don't have create one.
+    - In your profile select the repository and then go to the dashboard to the selected repo.
+
+3. **Configure the travis.yml file**
+    - Create a .travis.yml
+    - We are going to use de dev version of the Dockerfile as the prod version is just the build and do not allow to perform tests
+    - After success we will create imagers using the production dockerfile
+
+4. Put the images to docker hub
+    - Log in to the docker CLI if you are not. (docker login)
+    - Go to travis, to you project and more options -> settings
+    - Create two variables DOCKER_ID and DOCKER_PASSWORD with your credentials
+
+5. Commit and push to your repository to see if your script worked, then go to dockerhub to see
+your files
