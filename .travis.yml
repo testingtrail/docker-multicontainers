@@ -16,7 +16,7 @@ after_success:
     - docker build -t testingtrail/multi-worker ./worker
 
     # log in to docker cli
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin docker.io
 
     # take those images and push them to docker hub
     - docker push testingtrail/multi-client
