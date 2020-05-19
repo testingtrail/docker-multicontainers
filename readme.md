@@ -9,6 +9,8 @@ Architecture
 * The 'Values I have seen' section is gonna be stored in Postgres.
 * The 'Calculated values' is going to be stored in Redis (volatile DB).
 * There will be a separate NodeJS process called Worker that watches Redis for new indexes to show up. 
+* Travis.ci will be the tool for CD/CI to test it and then upload to DockerHub
+* AWS Elastic Beanstalk is going the one handling the app in production
 
 ![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/images/architecture.png)
 
@@ -172,3 +174,12 @@ We are going to now to deploy to production, we are going to use Travis as our C
 
 5. Commit and push to your repository to see if your script worked, then go to dockerhub to see
 your files
+
+12 Deploying to production (Amazon Elastic Beanstalk)
+-----------------------------------------------------
+
+We have to make a little configuration as we need to tell Elastic Beanstalk how to run those containers, how to link them, env variables, ports, so we are going to create a **Dockerrun.aws.json** and we are going to use Amazon Elastic container service (ECS) with instructions on how to run one single container. They are task definitions.
+
+1. Create the Dockerrun.aws.json (https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html). and add the containerDefinitions, there will be one per each container we have in the docker hub so AWS will go automatically to dockerhub to look for that image. The hostname is the name that will use the other containerdefinitions to access the container.
+
+2. 
