@@ -187,14 +187,14 @@ We have to make a little configuration as we need to tell Elastic Beanstalk how 
 
 3. in our docker compose we have an image for Redis and another for Postgres but we haven't done that in Trvis or AWS. so we have, for production change the architecture a little bit. 
 
-![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/images/architecture8.png)
+![Image description](https://github.com/jorgeautomation/Docker_multicontainers/blob/master/images/architecture9.png)
 
 
 13 Setting up Postgres in AWS
 -----------------------------
 For Postgres we are going to use **AWS relational database service**, which is a great tool with backups, security, easy to scale, logging, easier to migrate, etc.
 
-1. look for RDS in the services search -> go to create database -> choose postgres -> checkbox for free usage tier
+1. look for RDS in the services search -> go to create database -> choose postgres -> checkbox for free uage tier
 
 2.  enter username and password like 'postgres' and 'postgres_password' and any db instance identifier like 'multi-docker-postgres'
 
