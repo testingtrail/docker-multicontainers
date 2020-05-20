@@ -5,19 +5,35 @@
             "name": "client",
             "image": "qaguy/multi-client",
             "hostname": "client",
-            "essential": false
+            "essential": false,
+            "memory": 128
         },
         {
             "name": "server",
             "image": "qaguy/multi-server",
             "hostname": "api",
-            "essential": false
+            "essential": false,
+            "memory": 128
         },
         {
             "name": "worker",
             "image": "qaguy/multi-worker",
             "hostname": "worker",
-            "essential": false
+            "essential": false,
+            "memory": 128
+        },
+        {
+            "name": "nginx",
+            "image": "qaguy/multi-nginx",
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 80,
+                    "containerPort": 80
+                }
+            ],
+            "links": ["client", "server"],
+            "memory": 128
         }
           
     ]
